@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K.G. Srisanth - Income Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .logo-circle {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 24px;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.7);
+        }
+        
+        .logo-text {
+            font-weight: 700;
+            font-size: 28px;
+            letter-spacing: 1px;
+        }
+        
+        .profile-button {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 12px 25px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .profile-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ec4899, #8b5cf6);
+            filter: blur(20px);
+            opacity: 0.4;
+            z-index: -1;
+        }
+        
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #d1d5db;
+            text-align: center;
+        }
+        
+        .amount {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            background: linear-gradient(to right, #e2e8f0, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+        
+        .rupee-amount {
+            font-size: 18px;
+            color: #94a3b8;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 20px 0;
+        }
+        
+        .wallet-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 16px;
+        }
+        
+        .wallet-label {
+            font-size: 16px;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .wallet-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .secret-wallet .wallet-icon {
+            background: linear-gradient(45deg, #10b981, #059669);
+        }
+        
+        .ai-tooler .wallet-icon {
+            background: linear-gradient(45deg, #3b82f6, #2563eb);
+        }
+        
+        .wallet-amount {
+            font-size: 18px;
+            font-weight: 600;
+            text-align: right;
+        }
+        
+        .wallet-subtext {
+            font-size: 14px;
+            color: #94a3b8;
+        }
+        
+        .progress-container {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 75%;
+            background: linear-gradient(to right, #ec4899, #8b5cf6);
+            border-radius: 3px;
+        }
+        
+        .trend {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .up {
+            color: #4ade80;
+        }
+        
+        .down {
+            color: #f87171;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #64748b;
+            font-size: 14px;
+        }
+        
+        .glow-effect {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, #ec4899, #8b5cf6);
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.2;
+            z-index: -1;
+        }
+        
+        .glow-1 {
+            top: 10%;
+            left: -50px;
+        }
+        
+        .glow-2 {
+            bottom: 10%;
+            right: -50px;
+        }
+        
+        .value-change {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 15px;
+        }
+        
+        .change-item {
+            text-align: center;
+        }
+        
+        .change-value {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .change-label {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+    <div class="glow-effect glow-1"></div>
+    <div class="glow-effect glow-2"></div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-circle">KGS</div>
+                <div class="logo-text">K.G. Srisanth</div>
+            </div>
+            <a href="https://kg.srisanth.com" class="profile-button">
+                <i class="fas fa-user"></i>
+                <span>Get Profile</span>
+            </a>
+        </div>
+        
+        <div class="card">
+            <h2 class="card-title">TOTAL INCOME</h2>
+            <div class="amount">$186,423</div>
+            <div class="rupee-amount">₹1,54,87,890</div>
+            
+            <div class="value-change">
+                <div class="change-item">
+                    <div class="change-value up"><i class="fas fa-arrow-up"></i> $2,450</div>
+                    <div class="change-label">This Week</div>
+                </div>
+                <div class="change-item">
+                    <div class="change-value down"><i class="fas fa-arrow-down"></i> $1,230</div>
+                    <div class="change-label">This Month</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2 class="card-title">SECRET WALLET</h2>
+            
+            <div class="wallet-section secret-wallet">
+                <div class="wallet-label">
+                    <div class="wallet-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div>
+                        <div>Secret Wallet</div>
+                        <div class="wallet-subtext">Protected</div>
+                    </div>
+                </div>
+                <div class="wallet-amount">
+                    <div>$89,650</div>
+                    <div class="wallet-subtext">₹74,54,234</div>
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar" style="width: 48%"></div>
+            </div>
+            
+            <div class="trend up">
+                <i class="fas fa-arrow-up"></i>
+                <span>Increased by 2.3% this month</span>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2 class="card-title">AI TOOLER</h2>
+            
+            <div class="wallet-section ai-tooler">
+                <div class="wallet-label">
+                    <div class="wallet-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div>
+                        <div>AI Tooler</div>
+                        <div class="wallet-subtext">Active</div>
+                    </div>
+                </div>
+                <div class="wallet-amount">
+                    <div>$96,773</div>
+                    <div class="wallet-subtext">₹80,35,658</div>
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar" style="width: 52%"></div>
+            </div>
+            
+            <div class="trend up">
+                <i class="fas fa-arrow-up"></i>
+                <span>Increased by 3.7% this month</span>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2023 K.G. Srisanth. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        // Simulate changing values
+        function simulateMarketChanges() {
+            const amounts = document.querySelectorAll('.wallet-amount > div:first-child');
+            const rupeeAmounts = document.querySelectorAll('.wallet-subtext');
+            const trends = document.querySelectorAll('.trend');
+            
+            amounts.forEach(amount => {
+                const isDollar = amount.textContent.includes('$');
+                const currentValue = parseFloat(amount.textContent.replace('$', '').replace(',', ''));
+                const change = (Math.random() - 0.3) * 1000;
+                const newValue = Math.max(0, currentValue + change);
+                
+                if (isDollar) {
+                    amount.textContent = '$' + newValue.toLocaleString('en-US', {maximumFractionDigits: 0});
+                }
+            });
+            
+            // Randomly change trend indicators
+            trends.forEach(trend => {
+                if (Math.random() > 0.3) {
+                    trend.className = 'trend up';
+                    trend.innerHTML = '<i class="fas fa-arrow-up"></i> <span>Increased by ' + (Math.random() * 5).toFixed(1) + '% this month</span>';
+                } else {
+                    trend.className = 'trend down';
+                    trend.innerHTML = '<i class="fas fa-arrow-down"></i> <span>Decreased by ' + (Math.random() * 3).toFixed(1) + '% this month</span>';
+                }
+            });
+            
+            setTimeout(simulateMarketChanges, 5000);
+        }
+        
+        // Start simulation after page load
+        window.addEventListener('load', simulateMarketChanges);
+    </script>
+</body>
+</html>
